@@ -1,19 +1,248 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
 
-body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #1e1e2f, #2a2a40); color: #fff; margin: 0; padding: 0; text-align: center; }
-header { background: rgba(0, 0, 0, 0.7); padding: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
-h1 { font-size: 2.5rem; margin: 0; color: #ff6f61; }
-#search { padding: 10px; border: none; border-radius: 25px; width: 300px; margin-top: 10px; font-size: 1rem; background: rgba(255, 255, 255, 0.1); color: #fff; outline: none; }
-#search::placeholder { color: rgba(255, 255, 255, 0.7); }
-#movies { display: flex; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-.movie { margin: 15px; cursor: pointer; transition: transform 0.3s ease; }
-.movie:hover { transform: scale(1.1); }
-.movie img { width: 150px; height: 200px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
-.movie p { margin-top: 10px; font-size: 1rem; color: #ff6f61; }
-#chatbox { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 15px; width: 300px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); display: none; }
-#chatbox h2 { margin: 0 0 15px 0; font-size: 1.5rem; color: #ff6f61; }
-#chat-content { height: 200px; overflow-y: auto; margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.2); padding-bottom: 10px; }
-#message { width: 100%; padding: 10px; border: none; border-radius: 25px; background: rgba(255, 255, 255, 0.1); color: #fff; outline: none; }
-#message::placeholder { color: rgba(255, 255, 255, 0.7); }
-button { margin-top: 10px; padding: 10px 20px; border: none; border-radius: 25px; background: #ff6f61; color: #fff; font-size: 1rem; cursor: pointer; transition: background 0.3s ease; }
-button:hover { background: #ff4a3d; }
-.hidden { display: none; }
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #ff6f61;
+}
+
+#search {
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    width: 300px;
+    margin-top: 10px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+#search:focus {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#search::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#movies {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.movie {
+    margin: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.movie:hover {
+    transform: scale(1.1);
+}
+
+.movie img {
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.movie p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #ff6f61;
+}
+
+/* Chatbox Styling */
+#chatbox {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-radius: 15px;
+    width: 320px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#chatbox.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Chat Header */
+#chatbox h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+    color: #ff6f61;
+    text-align: center;
+}
+
+/* Chat Content - Scrollable */
+#chat-content {
+    height: 250px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    scrollbar-width: thin;
+    scrollbar-color: #ff6f61 rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Scrollbar for Chrome */
+#chat-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat-content::-webkit-scrollbar-thumb {
+    background: #ff6f61;
+    border-radius: 10px;
+}
+
+#chat-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Chat Message Styling */
+.chat-message {
+    max-width: 80%;
+    padding: 12px 15px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+
+/* Input Field */
+#message {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    margin-left: 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+#message:focus {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Send Button */
+button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: #ff6f61;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #ff4a3d;
+}
+
+/* Chat Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Username in Red */
+.username {
+    font-weight: bold;
+    color: #ff6f61;
+}
+
+.red{
+    color: #ff6f61;
+}
+
+
+/* Chat Content Area */
+#chat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align all messages to the left */
+    padding: 10px;
+    height: 250px;
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ff6f61 rgba(255, 255, 255, 0.1);
+}
+
+/* Styling for Chrome Scrollbar */
+#chat-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat-content::-webkit-scrollbar-thumb {
+    background: #ff6f61;
+    border-radius: 10px;
+}
+
+#chat-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#active-users {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#active-users h3 {
+    color: #ff6f61;
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+}
+
+.online-user {
+    color: #fff;
+    padding: 5px 0;
+    font-size: 1rem;
+}

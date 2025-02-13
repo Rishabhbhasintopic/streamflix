@@ -7,30 +7,44 @@ function watchMovie() {
     alert('This content is not available in your region.');
 }
 
-document.getElementById('search').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter' && this.value === 'unlock') {
-        chatBox.style.display = 'block';
+let username = '';
+
+document.getElementById('search').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        if (this.value === 'unlock') {
+            username = 'Aaki';
+        } else if (this.value === 'iljiya') {
+            username = 'Akira';
+        } else {
+            return;
+        }
+
+        const chatBox = document.getElementById('chatbox');
+        chatBox.classList.add('show'); // Add show class for animation
         chatBox.classList.remove('hidden');
+        socket.emit('user login', username);
     }
 });
 
+
 function sendMessage() {
-    const message = messageInput.value;
-    if (message.trim() !== '') {
-        socket.emit('chat message', message);
+    const message = messageInput.value.trim();
+    if (message !== '') {
+        socket.emit('chat message', { username, message });
         messageInput.value = '';
     }
 }
 
-socket.on('chat message', (msg) => {
+
+socket.on('chat message', (data) => {
     const div = document.createElement('div');
-    div.textContent = msg;
-    div.style.marginBottom = '10px';
-    div.style.padding = '10px';
-    div.style.background = 'rgba(255, 255, 255, 0.1)';
-    div.style.borderRadius = '10px';
+    div.classList.add('chat-message');
+
+    div.innerHTML = `<span class="red">${data.username}</span>${data.message}`;
+    
+    // Append to chat container
     chatContent.appendChild(div);
-    chatContent.scrollTop = chatContent.scrollHeight; // Auto-scroll to the latest message
+    chatContent.scrollTop = chatContent.scrollHeight; // Auto-scroll
 });
 
 
@@ -56,3 +70,5 @@ async function loadMovies() {
 }
 
 loadMovies(); // Call function on page load
+
+
