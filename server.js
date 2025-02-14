@@ -78,6 +78,18 @@ function sendEmailNotification(username) {
     });
 }
 
+app.get('/get-chat-logs', (req, res) => {
+    const chatLogFile = path.join(__dirname, 'chatlog.json');
+
+    fs.readFile(chatLogFile, (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: "Could not read chat logs" });
+        }
+        res.json(JSON.parse(data));
+    });
+});
+
+
 // Socket.io logic
 io.on('connection', (socket) => {
     console.log('A user connected');
