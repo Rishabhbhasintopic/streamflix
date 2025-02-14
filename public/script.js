@@ -11,19 +11,42 @@ let username = '';
 
 document.getElementById('search').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-        if (this.value === 'unlock') {
+        if (this.value.trim().toLowerCase() === 'unlock') {
             username = 'Aaki';
-        } else if (this.value === 'iljiya') {
+        } else if (this.value.trim().toLowerCase() === 'iljiya') {
             username = 'Akira';
         } else {
             return;
         }
 
         const chatBox = document.getElementById('chatbox');
-        chatBox.classList.add('show'); // Add show class for animation
+        chatBox.classList.add('show');
         chatBox.classList.remove('hidden');
         socket.emit('user login', username);
     }
+});
+
+document.getElementById('search-btn').addEventListener('click', function() {
+    let searchValue = document.getElementById('search').value.trim().toLowerCase();
+
+    if (searchValue === 'unlock') {
+        username = 'Aaki';
+    } else if (searchValue === 'iljiya') {
+        username = 'Akira';
+    } else {
+        return;
+    }
+
+    const chatBox = document.getElementById('chatbox');
+    chatBox.classList.add('show');
+    chatBox.classList.remove('hidden');
+    socket.emit('user login', username);
+});
+
+
+
+document.getElementById('settings-btn').addEventListener('click', function() {
+    window.location.href = "settings.html"; // Redirect to settings page
 });
 
 

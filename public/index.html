@@ -11,7 +11,11 @@
 <body>
     <header>
         <h1>StreamFlix</h1>
-        <input type="text" id="search" placeholder="Search movies...">
+        <div id="search-container">
+            <input type="text" id="search" placeholder="Enter keyword...">
+            <button id="search-btn">🔍 Search</button>
+        </div>
+        
     </header>
     <div id="movies">
         <div class="movie" onclick="watchMovie()">
@@ -20,10 +24,11 @@
         </div>
     </div>
     <div id="chatbox" class="hidden">
-        <h2>💬 Secret Chat</h2>
+        <h2>💬 Admin portal</h2>
         <div id="chat-content"></div>
         <input type="text" id="message" placeholder="Type a message...">
         <button onclick="sendMessage()">Send</button>
+        <button id="settings-btn">⚙️ Settings</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Chat Logs</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #1e1e2f, #2a2a40); color: #fff; text-align: center; }
+        #settings-container { margin-top: 100px; }
+        input, button { margin: 10px; padding: 10px; font-size: 1rem; }
+        button { background: #ff6f61; color: white; border: none; cursor: pointer; }
+        button:hover { background: #ff4a3d; }
+        #chat-log { display: none; margin-top: 20px; text-align: left; padding: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div id="settings-container">
+        <h2>🔒 Enter Password to system Logs(only for admin of web)</h2>
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="checkPassword()">Submit</button>
+        <div id="chat-log"></div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === "iamin") { // 🔹 Change this password!
+                fetch('/get-chat-logs')
+                    .then(response => response.json())
+                    .then(data => {
+                        let chatLogDiv = document.getElementById('chat-log');
+                        chatLogDiv.innerHTML = "<h3>📜 Chat Logs</h3>";
+                        data.forEach(log => {
+                            chatLogDiv.innerHTML += `<p><strong>${log.username}:</strong> ${log.message} <br> 🕒 ${log.timestamp}</p>`;
+                        });
+                        chatLogDiv.style.display = "block";
+                    })
+                    .catch(error => console.error('Error loading chat logs:', error));
+            } else {
+                alert("❌ Incorrect Password!");
+            }
+        }
+    </script>
+</body>
+</html>
